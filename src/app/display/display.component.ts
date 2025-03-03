@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
   styleUrl: './display.component.scss'
 })
 export class DisplayComponent {
-  @Input() value: string = '';  // Значение передается через Input
+  @Input() value: string = '';  
   
 }
