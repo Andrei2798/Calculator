@@ -19,53 +19,61 @@ export class AppComponent {
   isOperatorSet: boolean = false;  // Флаг, указывающий, был ли оператор уже выбран
 
 
-  // Обрабатываем нажатие кнопок
+  
   onButtonClicked(value: string) {
     if (!isNaN(Number(value))) {
-      // Если выбран оператор и мы начали ввод второго числа
+      
       if (this.isOperatorSet && this.isEnteringSecondNumber) {
-          this.currentInput = '';  // Очищаем ввод для второго числа
-          this.isEnteringSecondNumber = false;  // Отмечаем, что начали ввод второго числа
+          this.currentInput = '';  
+          this.isEnteringSecondNumber = false;  
       }
 
-      // Добавляем цифру к текущему введенному числу
+      
       this.currentInput += value;
 
-      // Обновляем отображаемое значение (на дисплее)
+      
       this.displayValue = this.currentInput;
   } 
+  else if (value === ".") {
+    
+    if (!this.currentInput.includes(".")) {
+      
+      this.currentInput += ".";
+      this.displayValue = this.currentInput;
+    }
+  }
   else if (value === "+" || value === "-" || value === "*" || value === "/") {
-    // Если первое число еще не введено
+   
     if (this.firstNumber === null) {
-      this.firstNumber = parseFloat(this.currentInput);  // Сохраняем первое число
+      this.firstNumber = parseFloat(this.currentInput);  
     } else if (!this.isEnteringSecondNumber) {
-      // Если первое число уже введено, выполнить предыдущее действие
+      
       this.secondNumber = parseFloat(this.currentInput);
       this.firstNumber = this.calculateOperation(this.firstNumber, this.secondNumber, this.currentOperator!);
       this.displayValue = this.firstNumber.toString();
     }
 
-    // Устанавливаем оператор и готовимся к вводу второго числа
+    
     this.currentOperator = value;
     this.isOperatorSet = true;
-    this.isEnteringSecondNumber = true; // Готовы к вводу второго числа
+    this.isEnteringSecondNumber = true; 
   }
   else if (value === "=") {
     if (this.firstNumber !== null && this.currentOperator !== null) {
-      this.secondNumber = parseFloat(this.currentInput);  // Получаем второе число
+      this.secondNumber = parseFloat(this.currentInput);  
       this.firstNumber = this.calculateOperation(this.firstNumber, this.secondNumber, this.currentOperator);
       this.displayValue = this.firstNumber.toString();
 
-      // Сбрасываем оператор и текущий ввод после выполнения вычисления
+      
       this.currentOperator = null;
       this.isOperatorSet = false;
       this.isEnteringSecondNumber = false;
-      this.currentInput = ''; // Готово для нового ввода
+      this.currentInput = ''; 
     }
   }
 
   else if (value === "C") {
-    this.clear(); // Вызов метода сброса состояния
+    this.clear(); 
   }
  
 }
